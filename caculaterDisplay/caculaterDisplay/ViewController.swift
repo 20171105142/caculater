@@ -10,10 +10,10 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    var temp = 0
-    var sum = 0
+    var temp = 0.0
+    var sum = 0.0
     var val = ""
-   
+    var sum1 = 0
     @IBOutlet weak var caculateDisplay: UILabel!
     var num:Bool = true
     
@@ -71,54 +71,71 @@ class ViewController: UIViewController {
         //caculateDisplay1.text = ""
     }
     @IBAction func buttonAdd(_ sender: Any) {//加法
-        
-            temp=Int(caculateDisplay.text!)!
-            val = "+"
-            caculateDisplay.text = ""
-        
+        temp = Double(caculateDisplay.text!)!
+        val = "+"
+        caculateDisplay.text = ""
         //caculateDisplay1.text = caculateDisplay1.text!+"+"
-        
     }
     @IBAction func buttonSub(_ sender: Any) {//减法
-            temp=Int(caculateDisplay.text!)!
-            val = "-"
-            caculateDisplay.text = ""
-       
-        
+        temp = Double(caculateDisplay.text!)!
+        val = "-"
+        caculateDisplay.text = ""
     }
     @IBAction func buttonMul(_ sender: Any) {//乘法
-        
-            temp=Int(caculateDisplay.text!)!
-            val = "*"
-            caculateDisplay.text = ""
-       
+        temp = Double(caculateDisplay.text!)!
+        val = "*"
+        caculateDisplay.text = ""
     }
     @IBAction func buttonDiv(_ sender: Any) {//除法
-        
-            temp=Int(caculateDisplay.text!)!
-            val = "/"
-            caculateDisplay.text = ""
-        
-
+        temp = Double(caculateDisplay.text!)!
+        val = "/"
+        caculateDisplay.text = ""
     }
     @IBAction func buttonCaculator(_ sender: Any) {//等于
+     //   switch num{
+      //  case !num:
         
-        
-        switch val {
-        case "+":
-            sum = temp + Int(caculateDisplay.text!)!
-        case "-":
-            sum = temp - Int(caculateDisplay.text!)!
-        case "*":
-            sum = temp * Int(caculateDisplay.text!)!
-        case "/":
-            sum = temp / Int(caculateDisplay.text!)!
+            switch val {
+            case "+":
+                sum = temp + Double(caculateDisplay.text!)!
+            case "-":
+                sum = temp - Double(caculateDisplay.text!)!
+            case "*":
+                sum = temp * Double(caculateDisplay.text!)!
+            case "/":
+                sum = temp / Double(caculateDisplay.text!)!
+            default :
+                break
+            }
+       
+       /* case num:
+           
+            switch val {
+                case "+":
+                    sum = Int(temp) + Int(caculateDisplay.text!)!
+                case "-":
+                    sum = Int(temp) - Int(caculateDisplay.text!)!
+                case "*":
+                    sum = Int(temp) * Int(caculateDisplay.text!)!
+                case "/":
+                    sum = Int(temp) / Int(caculateDisplay.text!)!
+                default :
+                    break
+             }
         default :
             break
-            }
-        
+        }*/
         //sum = sum + Int(caculateDisplay.text!)!
-        caculateDisplay.text = "\(sum)"
+        
+        
+        if !num{
+            caculateDisplay.text = "\(sum)"
+        }else if num{
+            sum1 = Int(sum)
+            caculateDisplay.text = "\(sum1)"
+        }
+        //caculateDisplay.text = "\(sum)"
+        //caculateDisplay.text = "sum"
         //caculateDisplay1.text = caculateDisplay.text
     }
     override func viewDidLoad() {
