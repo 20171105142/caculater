@@ -8,6 +8,14 @@
 
 import UIKit
 
+
+extension Double{
+    public func roundTo(places: Int) -> Double {
+        let divisor = pow(10.0, Double(places))
+        return (self * divisor).rounded() / divisor
+    }
+}
+
 class ViewController: UIViewController {
     
     var temp = 0.0
@@ -47,6 +55,27 @@ class ViewController: UIViewController {
             caculateDisplay.text = caculateDisplay.text!+"3"
         }
     }
+    @IBAction func Button4(_ sender: Any) {
+        if caculateDisplay.text == "0"{
+            caculateDisplay.text = "4"
+        }else{
+            caculateDisplay.text = caculateDisplay.text!+"4"
+        }
+    }
+    @IBAction func Button5(_ sender: Any) {
+        if caculateDisplay.text == "0"{
+            caculateDisplay.text = "5"
+        }else{
+            caculateDisplay.text = caculateDisplay.text!+"5"
+        }
+    }
+    @IBAction func Button6(_ sender: Any) {
+        if caculateDisplay.text == "0"{
+            caculateDisplay.text = "6"
+        }else{
+            caculateDisplay.text = caculateDisplay.text!+"6"
+        }
+    }
     @IBAction func Button7(_ sender: Any) {
         if caculateDisplay.text == "0"{
             caculateDisplay.text = "7"
@@ -54,6 +83,21 @@ class ViewController: UIViewController {
             caculateDisplay.text = caculateDisplay.text!+"7"
         }
         //caculateDisplay1.text = caculateDisplay1.text!+"7"
+    }
+    @IBAction func Button8(_ sender: Any) {
+        if caculateDisplay.text == "0"{
+            caculateDisplay.text = "8"
+        }else{
+            caculateDisplay.text = caculateDisplay.text!+"8"
+        }
+        
+    }
+    @IBAction func Button9(_ sender: Any) {
+        if caculateDisplay.text == "0"{
+            caculateDisplay.text = "9"
+        }else{
+            caculateDisplay.text = caculateDisplay.text!+"9"
+        }
     }
     @IBAction func buttonDot(_ sender: Any) {
         
@@ -73,23 +117,27 @@ class ViewController: UIViewController {
     @IBAction func buttonAdd(_ sender: Any) {//加法
         temp = Double(caculateDisplay.text!)!
         val = "+"
-        caculateDisplay.text = ""
+        caculateDisplay.text = "0"
+        num = true
         //caculateDisplay1.text = caculateDisplay1.text!+"+"
     }
     @IBAction func buttonSub(_ sender: Any) {//减法
         temp = Double(caculateDisplay.text!)!
         val = "-"
-        caculateDisplay.text = ""
+        caculateDisplay.text = "0"
+        num = true
     }
     @IBAction func buttonMul(_ sender: Any) {//乘法
         temp = Double(caculateDisplay.text!)!
         val = "*"
-        caculateDisplay.text = ""
+        caculateDisplay.text = "0"
+        num = true
     }
     @IBAction func buttonDiv(_ sender: Any) {//除法
         temp = Double(caculateDisplay.text!)!
         val = "/"
-        caculateDisplay.text = ""
+        caculateDisplay.text = "0"
+        num = true
     }
     @IBAction func buttonCaculator(_ sender: Any) {//等于
      //   switch num{
@@ -129,11 +177,25 @@ class ViewController: UIViewController {
         
         
         if !num{
-            caculateDisplay.text = "\(sum)"
+            //let sum: Double = sum.roundTo(places: 2)
+            
+            if sum.truncatingRemainder(dividingBy: 1.0) == 0.0{
+                sum1 = Int(sum)
+                caculateDisplay.text = "\(sum1)"
+            }else{
+                caculateDisplay.text = "\(sum.roundTo(places: 2))"
+            }
+            
         }else if num{
             sum1 = Int(sum)
             caculateDisplay.text = "\(sum1)"
         }
+        
+        
+        
+       // let distanceInM: Double = 1234.56789
+       
+       // print(visibleDistanceInM)
         //caculateDisplay.text = "\(sum)"
         //caculateDisplay.text = "sum"
         //caculateDisplay1.text = caculateDisplay.text
