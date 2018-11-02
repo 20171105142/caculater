@@ -9,7 +9,7 @@
 import UIKit
 
 
-extension Double{
+ extension Double{
     public func roundTo(places: Int) -> Double {
         let divisor = pow(10.0, Double(places))
         return (self * divisor).rounded() / divisor
@@ -19,6 +19,7 @@ extension Double{
 class ViewController: UIViewController {
     
     var temp = 0.0
+    var temp1 = ""
     var sum = 0.0
     var val = ""
     var sum1 = 0
@@ -139,6 +140,10 @@ class ViewController: UIViewController {
         caculateDisplay.text = "0"
         num = true
     }
+    @IBAction func buttonBs(_ sender: Any) {//退格
+        (caculateDisplay.text!).remove(at: (caculateDisplay.text!).index(before: (caculateDisplay.text!).endIndex))
+      
+    }
     @IBAction func buttonCaculator(_ sender: Any) {//等于
      //   switch num{
       //  case !num:
@@ -151,7 +156,12 @@ class ViewController: UIViewController {
             case "*":
                 sum = temp * Double(caculateDisplay.text!)!
             case "/":
-                sum = temp / Double(caculateDisplay.text!)!
+               // temp1 = caculateDisplay.text
+                //if temp1 == "0" {
+                  //  caculateDisplay.text = "2"
+                    //} else {
+                    sum = temp / Double(caculateDisplay.text!)!
+                //}
             default :
                 break
             }
@@ -176,20 +186,20 @@ class ViewController: UIViewController {
         //sum = sum + Int(caculateDisplay.text!)!
         
         
-        if !num{
-            //let sum: Double = sum.roundTo(places: 2)
+        //if sum {
+           
             
-            if sum.truncatingRemainder(dividingBy: 1.0) == 0.0{
-                sum1 = Int(sum)
-                caculateDisplay.text = "\(sum1)"
-            }else{
-                caculateDisplay.text = "\(sum.roundTo(places: 2))"
-            }
+        //   if sum.truncatingRemainder(dividingBy: 1.0) == 0.0{
+      //          sum1 = Int(sum)
+       //         caculateDisplay.text = "\(sum1)"
+       //     }else{
+                caculateDisplay.text = "\(sum.roundTo(places: 10))"
+        //    }
             
-        }else if num{
+     /*   }else {
             sum1 = Int(sum)
             caculateDisplay.text = "\(sum1)"
-        }
+        }*/
         
         
         
