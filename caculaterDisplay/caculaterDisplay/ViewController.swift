@@ -19,17 +19,21 @@ import UIKit
 class ViewController: UIViewController {
     
     var temp = 0.0
-    var temp1 = ""
+    
     var sum = 0.0
     var val = ""
     var sum1 = 0
+    var decimainPoint:Bool = true
+    var judgmentResult:Bool = false
     @IBOutlet weak var caculateDisplay: UILabel!
-    var num:Bool = true
+    
     
     @IBAction func Button0(_ sender: Any) {
         if caculateDisplay.text == "0"{
         //caculateDisplay.text = caculateDisplay.text!+"0"
-        }else{
+        } else if judgmentResult {
+            caculateDisplay.text = "0"
+        } else {
             caculateDisplay.text = caculateDisplay.text!+"0"
         }
         
@@ -37,7 +41,9 @@ class ViewController: UIViewController {
     @IBAction func Button1(_ sender: Any) {
         if caculateDisplay.text == "0"{
         caculateDisplay.text = "1"
-        }else{
+        } else if judgmentResult {
+            caculateDisplay.text = "1"
+        } else {
             caculateDisplay.text = caculateDisplay.text!+"1"
         }
         //caculateDisplay1.text = caculateDisplay1.text!+"1"
@@ -45,42 +51,54 @@ class ViewController: UIViewController {
     @IBAction func Button2(_ sender: Any) {
         if caculateDisplay.text == "0"{
             caculateDisplay.text = "2"
-        }else{
+        } else if judgmentResult {
+            caculateDisplay.text = "2"
+        } else {
             caculateDisplay.text = caculateDisplay.text!+"2"
         }
     }
     @IBAction func Button3(_ sender: Any) {
         if caculateDisplay.text == "0"{
             caculateDisplay.text = "3"
-        }else{
+        } else if judgmentResult {
+            caculateDisplay.text = "3"
+        } else {
             caculateDisplay.text = caculateDisplay.text!+"3"
         }
     }
     @IBAction func Button4(_ sender: Any) {
         if caculateDisplay.text == "0"{
             caculateDisplay.text = "4"
-        }else{
+        } else if judgmentResult {
+            caculateDisplay.text = "4"
+        } else {
             caculateDisplay.text = caculateDisplay.text!+"4"
         }
     }
     @IBAction func Button5(_ sender: Any) {
         if caculateDisplay.text == "0"{
             caculateDisplay.text = "5"
-        }else{
+        } else if judgmentResult {
+            caculateDisplay.text = "5"
+        } else {
             caculateDisplay.text = caculateDisplay.text!+"5"
         }
     }
     @IBAction func Button6(_ sender: Any) {
         if caculateDisplay.text == "0"{
             caculateDisplay.text = "6"
-        }else{
+        } else if judgmentResult {
+            caculateDisplay.text = "6"
+        } else {
             caculateDisplay.text = caculateDisplay.text!+"6"
         }
     }
     @IBAction func Button7(_ sender: Any) {
         if caculateDisplay.text == "0"{
             caculateDisplay.text = "7"
-        }else{
+        } else if judgmentResult {
+            caculateDisplay.text = "7"
+        } else {
             caculateDisplay.text = caculateDisplay.text!+"7"
         }
         //caculateDisplay1.text = caculateDisplay1.text!+"7"
@@ -88,7 +106,9 @@ class ViewController: UIViewController {
     @IBAction func Button8(_ sender: Any) {
         if caculateDisplay.text == "0"{
             caculateDisplay.text = "8"
-        }else{
+        } else if judgmentResult {
+            caculateDisplay.text = "8"
+        } else {
             caculateDisplay.text = caculateDisplay.text!+"8"
         }
         
@@ -96,119 +116,86 @@ class ViewController: UIViewController {
     @IBAction func Button9(_ sender: Any) {
         if caculateDisplay.text == "0"{
             caculateDisplay.text = "9"
-        }else{
+        } else if judgmentResult {
+            caculateDisplay.text = "9"
+        } else {
             caculateDisplay.text = caculateDisplay.text!+"9"
         }
+        judgmentResult = false
     }
     @IBAction func buttonDot(_ sender: Any) {
         
-        if caculateDisplay.text == "" && num{
+        if caculateDisplay.text == "" && decimainPoint{
             caculateDisplay.text = "0."
-        }else if num {
+        } else if decimainPoint {
             caculateDisplay.text = caculateDisplay.text!+"."
         }
-        num = false
+        decimainPoint = false
       
     }
     @IBAction func clear(_ sender: Any) {
         caculateDisplay.text = "0"
-        num = true
+        decimainPoint = true
         //caculateDisplay1.text = ""
     }
     @IBAction func buttonAdd(_ sender: Any) {//加法
         temp = Double(caculateDisplay.text!)!
         val = "+"
         caculateDisplay.text = "0"
-        num = true
+        decimainPoint = true
         //caculateDisplay1.text = caculateDisplay1.text!+"+"
     }
     @IBAction func buttonSub(_ sender: Any) {//减法
         temp = Double(caculateDisplay.text!)!
         val = "-"
         caculateDisplay.text = "0"
-        num = true
+        decimainPoint = true
     }
     @IBAction func buttonMul(_ sender: Any) {//乘法
         temp = Double(caculateDisplay.text!)!
         val = "*"
         caculateDisplay.text = "0"
-        num = true
+        decimainPoint = true
     }
     @IBAction func buttonDiv(_ sender: Any) {//除法
         temp = Double(caculateDisplay.text!)!
         val = "/"
         caculateDisplay.text = "0"
-        num = true
+        decimainPoint = true
     }
     @IBAction func buttonBs(_ sender: Any) {//退格
+        if caculateDisplay.text! == ""{
+            
+        } else {
         (caculateDisplay.text!).remove(at: (caculateDisplay.text!).index(before: (caculateDisplay.text!).endIndex))
+        }
       
     }
     @IBAction func buttonCaculator(_ sender: Any) {//等于
      //   switch num{
       //  case !num:
         
-            switch val {
+       switch val {
             case "+":
-                sum = temp + Double(caculateDisplay.text!)!
+            sum = temp + Double(caculateDisplay.text!)!
             case "-":
-                sum = temp - Double(caculateDisplay.text!)!
+            sum = temp - Double(caculateDisplay.text!)!
             case "*":
-                sum = temp * Double(caculateDisplay.text!)!
+            sum = temp * Double(caculateDisplay.text!)!
             case "/":
-               // temp1 = caculateDisplay.text
-                //if temp1 == "0" {
-                  //  caculateDisplay.text = "2"
-                    //} else {
+                if Double (caculateDisplay.text!)! == 0.0 {
+                    caculateDisplay.text = caculateDisplay.text!+"error"
+                    print("22");
+                }else {
                     sum = temp / Double(caculateDisplay.text!)!
-                //}
-            default :
-                break
-            }
-       
-       /* case num:
-           
-            switch val {
-                case "+":
-                    sum = Int(temp) + Int(caculateDisplay.text!)!
-                case "-":
-                    sum = Int(temp) - Int(caculateDisplay.text!)!
-                case "*":
-                    sum = Int(temp) * Int(caculateDisplay.text!)!
-                case "/":
-                    sum = Int(temp) / Int(caculateDisplay.text!)!
-                default :
-                    break
-             }
+                }
+        
         default :
             break
-        }*/
-        //sum = sum + Int(caculateDisplay.text!)!
-        
-        
-        //if sum {
-           
-            
-        //   if sum.truncatingRemainder(dividingBy: 1.0) == 0.0{
-      //          sum1 = Int(sum)
-       //         caculateDisplay.text = "\(sum1)"
-       //     }else{
-                caculateDisplay.text = "\(sum.roundTo(places: 10))"
-        //    }
-            
-     /*   }else {
-            sum1 = Int(sum)
-            caculateDisplay.text = "\(sum1)"
-        }*/
-        
-        
-        
-       // let distanceInM: Double = 1234.56789
-       
-       // print(visibleDistanceInM)
-        //caculateDisplay.text = "\(sum)"
-        //caculateDisplay.text = "sum"
-        //caculateDisplay1.text = caculateDisplay.text
+        }
+        caculateDisplay.text = "\(sum.roundTo(places: 10))"
+        judgmentResult = true
+    
     }
     override func viewDidLoad() {
         super.viewDidLoad()
