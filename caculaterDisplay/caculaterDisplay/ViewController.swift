@@ -23,8 +23,8 @@ class ViewController: UIViewController {
     var sum = 0.0
     var val = ""
     var sum1 = 0
-    var decimainPoint:Bool = true
-    var judgmentResult:Bool = false
+    var decimainPoint:Bool = true//判断小数点
+    var judgmentResult:Bool = false//判断结果
     @IBOutlet weak var caculateDisplay: UILabel!
     
     
@@ -184,9 +184,14 @@ class ViewController: UIViewController {
             sum = temp * Double(caculateDisplay.text!)!
             case "/":
                 if Double (caculateDisplay.text!)! == 0.0 {
-                    caculateDisplay.text = caculateDisplay.text!+"error"
-                    print("22");
-                }else {
+                    let alertController = UIAlertController(title: "不可除以零",message: nil, preferredStyle: .alert)
+                    //显示提示框
+                    self.present(alertController, animated: true, completion: nil)
+                    //两秒钟后自动消失
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
+                        self.presentedViewController?.dismiss(animated: false, completion: nil)
+                    }
+                } else {
                     sum = temp / Double(caculateDisplay.text!)!
                 }
         
