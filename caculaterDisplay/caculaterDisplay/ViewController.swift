@@ -18,6 +18,7 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    
     var temp = 0.0
     
     var sum = 0.0
@@ -36,6 +37,7 @@ class ViewController: UIViewController {
         } else {
             caculateDisplay.text = caculateDisplay.text!+"0"
         }
+        judgmentResult = false
         
     }
     @IBAction func Button1(_ sender: Any) {
@@ -46,6 +48,7 @@ class ViewController: UIViewController {
         } else {
             caculateDisplay.text = caculateDisplay.text!+"1"
         }
+        judgmentResult = false
         //caculateDisplay1.text = caculateDisplay1.text!+"1"
     }
     @IBAction func Button2(_ sender: Any) {
@@ -56,6 +59,7 @@ class ViewController: UIViewController {
         } else {
             caculateDisplay.text = caculateDisplay.text!+"2"
         }
+        judgmentResult = false
     }
     @IBAction func Button3(_ sender: Any) {
         if caculateDisplay.text == "0"{
@@ -65,6 +69,7 @@ class ViewController: UIViewController {
         } else {
             caculateDisplay.text = caculateDisplay.text!+"3"
         }
+        judgmentResult = false
     }
     @IBAction func Button4(_ sender: Any) {
         if caculateDisplay.text == "0"{
@@ -74,6 +79,7 @@ class ViewController: UIViewController {
         } else {
             caculateDisplay.text = caculateDisplay.text!+"4"
         }
+        judgmentResult = false
     }
     @IBAction func Button5(_ sender: Any) {
         if caculateDisplay.text == "0"{
@@ -83,6 +89,7 @@ class ViewController: UIViewController {
         } else {
             caculateDisplay.text = caculateDisplay.text!+"5"
         }
+        judgmentResult = false
     }
     @IBAction func Button6(_ sender: Any) {
         if caculateDisplay.text == "0"{
@@ -92,6 +99,7 @@ class ViewController: UIViewController {
         } else {
             caculateDisplay.text = caculateDisplay.text!+"6"
         }
+        judgmentResult = false
     }
     @IBAction func Button7(_ sender: Any) {
         if caculateDisplay.text == "0"{
@@ -101,6 +109,7 @@ class ViewController: UIViewController {
         } else {
             caculateDisplay.text = caculateDisplay.text!+"7"
         }
+        judgmentResult = false
         //caculateDisplay1.text = caculateDisplay1.text!+"7"
     }
     @IBAction func Button8(_ sender: Any) {
@@ -111,7 +120,7 @@ class ViewController: UIViewController {
         } else {
             caculateDisplay.text = caculateDisplay.text!+"8"
         }
-        
+        judgmentResult = false
     }
     @IBAction func Button9(_ sender: Any) {
         if caculateDisplay.text == "0"{
@@ -164,7 +173,7 @@ class ViewController: UIViewController {
         decimainPoint = true
     }
     @IBAction func buttonBs(_ sender: Any) {//退格
-        if caculateDisplay.text! == ""{
+        if caculateDisplay.text! == "0"{
             
         } else {
         (caculateDisplay.text!).remove(at: (caculateDisplay.text!).index(before: (caculateDisplay.text!).endIndex))
@@ -174,6 +183,9 @@ class ViewController: UIViewController {
     @IBAction func buttonCaculator(_ sender: Any) {//等于
      //   switch num{
       //  case !num:
+        //w=375   h=666
+        
+        //let button1:UIButton = UIButton(type:.contactAdd)
         
        switch val {
             case "+":
