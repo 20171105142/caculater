@@ -51,6 +51,7 @@ class ViewController: UIViewController {
     var decimainPoint:Bool = true//判断小数点
     var judgmentResult:Bool = false//判断结果
     var parenthesisJudgement:Bool = true //判断括号
+    
     public func JudgementNumber(number:Character)->Bool
     {
         //判断字符是否为数字
@@ -74,9 +75,9 @@ class ViewController: UIViewController {
             return 2
         case "-":
             return 2
-        case "✖️":
+        case "×":
             return 3
-        case "➗":
+        case "÷":
             return 3
         case ")":
             return 4
@@ -99,9 +100,9 @@ class ViewController: UIViewController {
             return left + right
         case "-"://减法
             return left - right
-        case "✖️"://乘法
+        case "×"://乘法
             return left * right
-        case "➗"://除法
+        case "÷"://除法
             if right == 0.0 {
                 let alertController = UIAlertController(title: "不可除以零",message: nil, preferredStyle: .alert)
                 //显示提示框
@@ -328,12 +329,24 @@ class ViewController: UIViewController {
         parenthesisJudgement = false
     }
     @IBAction func buttonDot(_ sender: Any) {
+        var a:Character = " "
+        if caculateDisplay.text! == ""{
+            caculateDisplay.text = "0."
+        } else {
+            a = caculateDisplay.text!.last!
+            if !JudgementNumber(number:a) {
+                caculateDisplay.text = caculateDisplay.text!+"0."
+            } else {
+                caculateDisplay.text = caculateDisplay.text!+"."
+            }
+        }
         
-        if caculateDisplay.text == "" && decimainPoint{
+        
+        /*if caculateDisplay.text == "" && decimainPoint{
             caculateDisplay.text = "0."
         } else if decimainPoint {
             caculateDisplay.text = caculateDisplay.text!+"."
-        }
+        }*/
         decimainPoint = false
     }
     
@@ -361,11 +374,11 @@ class ViewController: UIViewController {
     }
     @IBAction func buttonMul(_ sender: Any) {//乘法
         
-        caculateDisplay.text = caculateDisplay.text!+"✖️"
+        caculateDisplay.text = caculateDisplay.text!+"×"
         decimainPoint = true
     }
     @IBAction func buttonDiv(_ sender: Any) {//除法
-        caculateDisplay.text = caculateDisplay.text!+"➗"
+        caculateDisplay.text = caculateDisplay.text!+"÷"
         decimainPoint = true
     }
     @IBAction func buttonBs(_ sender: Any) {//退格

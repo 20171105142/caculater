@@ -36,7 +36,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y6Y-vL-kpv">
                                 <rect key="frame" x="322" y="202" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="➗"/>
+                                <state key="normal" title="÷"/>
                                 <connections>
                                     <action selector="buttonDiv:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rVT-Pv-Hre"/>
                                 </connections>
@@ -68,7 +68,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QhX-E6-bY9">
                                 <rect key="frame" x="322" y="304" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="✖️"/>
+                                <state key="normal" title="×"/>
                                 <connections>
                                     <action selector="buttonMul:" destination="BYZ-38-t0r" eventType="touchUpInside" id="19r-ES-j06"/>
                                 </connections>
@@ -100,7 +100,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mvf-al-TsO">
                                 <rect key="frame" x="325" y="518" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="➕"/>
+                                <state key="normal" title="＋"/>
                                 <connections>
                                     <action selector="buttonAdd:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Lbk-EB-Yg5"/>
                                 </connections>
@@ -108,7 +108,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WgC-EV-q9y">
                                 <rect key="frame" x="325" y="406" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="➖"/>
+                                <state key="normal" title="－"/>
                                 <connections>
                                     <action selector="buttonSub:" destination="BYZ-38-t0r" eventType="touchUpInside" id="iwG-fl-1aF"/>
                                 </connections>
@@ -116,7 +116,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ayD-oX-OKo">
                                 <rect key="frame" x="305" y="618" width="93" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="="/>
+                                <state key="normal" title="＝"/>
                                 <connections>
                                     <action selector="buttonCaculator:" destination="BYZ-38-t0r" eventType="touchUpInside" id="t81-2R-aVr"/>
                                 </connections>
