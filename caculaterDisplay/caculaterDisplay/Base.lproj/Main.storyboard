@@ -156,6 +156,9 @@
                                 <rect key="frame" x="0.0" y="599" width="94" height="69"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="+/-"/>
+                                <connections>
+                                    <action selector="buttonBrs:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2YQ-Jp-Dhi"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zHo-6C-XZo">
                                 <rect key="frame" x="98" y="202" width="30" height="30"/>
@@ -169,6 +172,9 @@
                                 <rect key="frame" x="218" y="202" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="%"/>
+                                <connections>
+                                    <action selector="buttonPercentage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AOj-3Q-gtG"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Ef-80-Yz0">
                                 <rect key="frame" x="198" y="618" width="93" height="49"/>

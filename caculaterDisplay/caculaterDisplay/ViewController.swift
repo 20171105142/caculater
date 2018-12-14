@@ -44,13 +44,11 @@ extension Double{
 
 class ViewController: UIViewController {
     
-    var temp = 0.0
-    var sum = 0.0
-    var val = ""
-    var sum1 = 0
-    var decimainPoint:Bool = true//判断小数点
-    var judgmentResult:Bool = false//判断结果
-    var parenthesisJudgement:Bool = true //判断括号
+    var LeftBracketsCount:Int = 0//左括号计数
+    var RightBracketsCount:Int = 0//右括号计数
+    var decimainPoint:Bool = false//判断小数点
+    var judgmentResult:Bool = false//结果刷新
+    var parenthesisJudgement:Bool = false //判断括号
     
     public func JudgementNumber(number:Character)->Bool
     {
@@ -219,172 +217,294 @@ class ViewController: UIViewController {
     
     
     @IBAction func Button0(_ sender: Any) {
-        if caculateDisplay.text == "0"{
-        //caculateDisplay.text = caculateDisplay.text!+"0"
-        } else if judgmentResult {
+        var last:Character = " "
+        if caculateDisplay.text! == ""{//屏幕为空时
             caculateDisplay.text = "0"
-        } else {
-            caculateDisplay.text = caculateDisplay.text!+"0"
+        } else if !judgmentResult {//没有按下等号
+            last = caculateDisplay.text!.last!
+            if last == ")" || last == "%" {
+                //最后一位 为“），%”
+                caculateDisplay.text = caculateDisplay.text!+"×0"
+            } else {
+                caculateDisplay.text = caculateDisplay.text!+"0"
+            }
         }
-        judgmentResult = false
-        parenthesisJudgement = false
+        judgmentResult = false//结果刷新
+        parenthesisJudgement = true//括号判断
     }
     @IBAction func Button1(_ sender: Any) {
-        if caculateDisplay.text == "0"{
-        caculateDisplay.text = "1"
-        } else if judgmentResult {
+        var last:Character = " "
+        if caculateDisplay.text! == ""{//屏幕为空时
             caculateDisplay.text = "1"
-        } else {
-            caculateDisplay.text = caculateDisplay.text!+"1"
+        } else if !judgmentResult {//没有按下等号
+            last = caculateDisplay.text!.last!
+            if last == ")" || last == "%" {
+                //最后一位 为“），%”
+                caculateDisplay.text = caculateDisplay.text!+"×1"
+            } else {
+                caculateDisplay.text = caculateDisplay.text!+"1"
+            }
         }
         judgmentResult = false
-        parenthesisJudgement = false
-        //caculateDisplay1.text = caculateDisplay1.text!+"1"
+        parenthesisJudgement = true//括号判断
     }
     @IBAction func Button2(_ sender: Any) {
-        if caculateDisplay.text == "0"{
+        var last:Character = " "
+        if caculateDisplay.text! == ""{//屏幕为空时
             caculateDisplay.text = "2"
-        } else if judgmentResult {
-            caculateDisplay.text = "2"
-        } else {
-            caculateDisplay.text = caculateDisplay.text!+"2"
+        } else if !judgmentResult {//没有按下等号
+            last = caculateDisplay.text!.last!
+            if last == ")" || last == "%" {
+                //最后一位 为“），%”
+                caculateDisplay.text = caculateDisplay.text!+"×2"
+            } else {
+                caculateDisplay.text = caculateDisplay.text!+"2"
+            }
         }
         judgmentResult = false
+        parenthesisJudgement = true//括号判断
     }
     @IBAction func Button3(_ sender: Any) {
-        if caculateDisplay.text == "0"{
+        var last:Character = " "
+        if caculateDisplay.text! == ""{//屏幕为空时
             caculateDisplay.text = "3"
-        } else if judgmentResult {
-            caculateDisplay.text = "3"
-        } else {
-            caculateDisplay.text = caculateDisplay.text!+"3"
+        } else if !judgmentResult {//没有按下等号
+            last = caculateDisplay.text!.last!
+            if last == ")" || last == "%" {
+                //最后一位 为“），%”
+                caculateDisplay.text = caculateDisplay.text!+"×3"
+            } else {
+                caculateDisplay.text = caculateDisplay.text!+"3"
+            }
         }
         judgmentResult = false
-        parenthesisJudgement = false
+        parenthesisJudgement = true//括号判断
     }
     @IBAction func Button4(_ sender: Any) {
-        if caculateDisplay.text == "0"{
+        var last:Character = " "
+        if caculateDisplay.text! == ""{//屏幕为空时
             caculateDisplay.text = "4"
-        } else if judgmentResult {
-            caculateDisplay.text = "4"
-        } else {
-            caculateDisplay.text = caculateDisplay.text!+"4"
+        } else if !judgmentResult {//没有按下等号
+            last = caculateDisplay.text!.last!
+            if last == ")" || last == "%" {
+                //最后一位 为“），%”
+                caculateDisplay.text = caculateDisplay.text!+"×4"
+            } else {
+                caculateDisplay.text = caculateDisplay.text!+"4"
+            }
         }
         judgmentResult = false
-        parenthesisJudgement = false
+        parenthesisJudgement = true//括号判断
     }
     @IBAction func Button5(_ sender: Any) {
-        if caculateDisplay.text == "0"{
+        var last:Character = " "
+        if caculateDisplay.text! == ""{//屏幕为空时
             caculateDisplay.text = "5"
-        } else if judgmentResult {
-            caculateDisplay.text = "5"
-        } else {
-            caculateDisplay.text = caculateDisplay.text!+"5"
+        } else if !judgmentResult {//没有按下等号
+            last = caculateDisplay.text!.last!
+            if last == ")" || last == "%" {
+                //最后一位 为“），%”
+                caculateDisplay.text = caculateDisplay.text!+"×5"
+            } else {
+                caculateDisplay.text = caculateDisplay.text!+"5"
+            }
         }
         judgmentResult = false
+        parenthesisJudgement = true//括号判断
     }
     @IBAction func Button6(_ sender: Any) {
-        if caculateDisplay.text == "0"{
+        var last:Character = " "
+        if caculateDisplay.text! == ""{//屏幕为空时
             caculateDisplay.text = "6"
-        } else if judgmentResult {
-            caculateDisplay.text = "6"
-        } else {
-            caculateDisplay.text = caculateDisplay.text!+"6"
+        } else if !judgmentResult {//没有按下等号
+            last = caculateDisplay.text!.last!
+            if last == ")" || last == "%" {
+                //最后一位 为“），%”
+                caculateDisplay.text = caculateDisplay.text!+"×6"
+            } else {
+                caculateDisplay.text = caculateDisplay.text!+"6"
+            }
         }
         judgmentResult = false
-        parenthesisJudgement = false
+        parenthesisJudgement = true//括号判断
     }
     @IBAction func Button7(_ sender: Any) {
-        if caculateDisplay.text == "0"{
+        var last:Character = " "
+        if caculateDisplay.text! == ""{//屏幕为空时
             caculateDisplay.text = "7"
-        } else if judgmentResult {
-            caculateDisplay.text = "7"
-        } else {
-            caculateDisplay.text = caculateDisplay.text!+"7"
+        } else if !judgmentResult {//没有按下等号
+            last = caculateDisplay.text!.last!
+            if last == ")" || last == "%" {
+                //最后一位 为“），%”
+                caculateDisplay.text = caculateDisplay.text!+"×7"
+            } else {
+                caculateDisplay.text = caculateDisplay.text!+"7"
+            }
         }
         judgmentResult = false
-        parenthesisJudgement = false
-        //caculateDisplay1.text = caculateDisplay1.text!+"7"
+        parenthesisJudgement = true//括号判断
     }
     @IBAction func Button8(_ sender: Any) {
-        if caculateDisplay.text == "0"{
+        var last:Character = " "
+        if caculateDisplay.text! == ""{//屏幕为空时
             caculateDisplay.text = "8"
-        } else if judgmentResult {
-            caculateDisplay.text = "8"
-        } else {
-            caculateDisplay.text = caculateDisplay.text!+"8"
+        } else if !judgmentResult {//没有按下等号
+            last = caculateDisplay.text!.last!
+            if last == ")" || last == "%" {
+                //最后一位 为“），%”
+                caculateDisplay.text = caculateDisplay.text!+"×8"
+            } else {
+                caculateDisplay.text = caculateDisplay.text!+"8"
+            }
         }
         judgmentResult = false
-        parenthesisJudgement = false
+        parenthesisJudgement = true//括号判断
     }
     @IBAction func Button9(_ sender: Any) {
-        if caculateDisplay.text == "0"{
+        var last:Character = " "
+        if caculateDisplay.text! == ""{//屏幕为空时
             caculateDisplay.text = "9"
-        } else if judgmentResult {
-            caculateDisplay.text = "9"
-        } else {
-            caculateDisplay.text = caculateDisplay.text!+"9"
+        } else if !judgmentResult {//没有按下等号
+            last = caculateDisplay.text!.last!
+            if last == ")" || last == "%" {
+                //最后一位 为“），%”
+                caculateDisplay.text = caculateDisplay.text!+"×9"
+            } else {
+                caculateDisplay.text = caculateDisplay.text!+"9"
+            }
         }
         judgmentResult = false
-        parenthesisJudgement = false
+        parenthesisJudgement = true//括号判断
     }
-    @IBAction func buttonDot(_ sender: Any) {
-        var a:Character = " "
-        if caculateDisplay.text! == ""{
+    @IBAction func buttonDot(_ sender: Any) {//小数点
+        var last:Character = " "
+        if caculateDisplay.text! == "" {//当屏幕为空时
             caculateDisplay.text = "0."
-        } else {
-            a = caculateDisplay.text!.last!
-            if !JudgementNumber(number:a) {
+        } else if !decimainPoint {//没有按下小数点或按下操作符
+            last = caculateDisplay.text!.last!
+            if !JudgementNumber(number:last) {//前一位非数字
                 caculateDisplay.text = caculateDisplay.text!+"0."
             } else {
                 caculateDisplay.text = caculateDisplay.text!+"."
             }
         }
-        
-        
-        /*if caculateDisplay.text == "" && decimainPoint{
-            caculateDisplay.text = "0."
-        } else if decimainPoint {
-            caculateDisplay.text = caculateDisplay.text!+"."
-        }*/
-        decimainPoint = false
+        decimainPoint = true//小数点
     }
     
     @IBAction func buttonBrackets(_ sender: Any) {//括号
-        if parenthesisJudgement {
+        var last:Character = " "
+        if caculateDisplay.text! == "" {//屏幕为空时
             caculateDisplay.text = caculateDisplay.text!+"("
+            LeftBracketsCount = LeftBracketsCount + 1
         } else {
-            caculateDisplay.text = caculateDisplay.text!+")"
-            
+            if !parenthesisJudgement || LeftBracketsCount == RightBracketsCount {//按下操作符h或左右括号数量相等
+                last = caculateDisplay.text!.last!
+                if JudgementNumber(number:last) || last == ")" || last == "%" {
+                    //在数字，右括号，百分号后面
+                    caculateDisplay.text = caculateDisplay.text!+"×("
+                    LeftBracketsCount = LeftBracketsCount + 1
+                } else {
+                    caculateDisplay.text = caculateDisplay.text!+"("
+                    LeftBracketsCount = LeftBracketsCount + 1
+                }
+            } else if parenthesisJudgement && RightBracketsCount < LeftBracketsCount {
+                //左h括号数量大于右括号
+                caculateDisplay.text = caculateDisplay.text!+")"
+                RightBracketsCount = RightBracketsCount + 1
+            }
+        }
+        if LeftBracketsCount == RightBracketsCount {//当左括号数量等于右括号时
+            parenthesisJudgement = false
         }
     }
     @IBAction func clear(_ sender: Any) {
-        caculateDisplay.text = "0"
-        decimainPoint = true
-        //caculateDisplay1.text = ""
+        caculateDisplay.text = ""
+        decimainPoint = false//判断小数点
+        judgmentResult = false//判断结果
+        parenthesisJudgement = false//括号判断
+        LeftBracketsCount = 0//左括号
+        RightBracketsCount = 0//右括号
     }
     @IBAction func buttonAdd(_ sender: Any) {//加法
-        caculateDisplay.text = caculateDisplay.text!+"+"
-        decimainPoint = true
-        
+        var last:Character = " "
+        if caculateDisplay.text! == "" {
+        } else {
+            last = caculateDisplay.text!.last!
+            if JudgementNumber(number:last) || last == ")" || last == "%" {
+                //数字，右括号，百分号
+                caculateDisplay.text = caculateDisplay.text!+"+"
+            }
+        }
+        decimainPoint = false
     }
     @IBAction func buttonSub(_ sender: Any) {//减法
-        caculateDisplay.text = caculateDisplay.text!+"-"
-        decimainPoint = true
+        var last:Character = " "
+        if caculateDisplay.text! == "" {
+        } else {
+            last = caculateDisplay.text!.last!
+            if JudgementNumber(number:last) || last == "(" || last == ")" || last == "%" {
+                //数字，左括号，右括号，百分号，
+                caculateDisplay.text = caculateDisplay.text!+"-"
+            }
+        }
+        decimainPoint = false
     }
     @IBAction func buttonMul(_ sender: Any) {//乘法
-        
-        caculateDisplay.text = caculateDisplay.text!+"×"
-        decimainPoint = true
+        var last:Character = " "
+        if caculateDisplay.text! == "" {
+        } else {
+            last = caculateDisplay.text!.last!
+            if JudgementNumber(number:last) || last == ")" || last == "%" {
+                //数字，右括号，百分号
+                caculateDisplay.text = caculateDisplay.text!+"×"
+            }
+        }
+        decimainPoint = false
     }
     @IBAction func buttonDiv(_ sender: Any) {//除法
-        caculateDisplay.text = caculateDisplay.text!+"÷"
-        decimainPoint = true
+        var last:Character = " "
+        if caculateDisplay.text! == "" {
+        } else {
+            last = caculateDisplay.text!.last!
+            if JudgementNumber(number:last) || last == ")" || last == "%" {
+                //在数字，右括号，百分号k后面
+                caculateDisplay.text = caculateDisplay.text!+"÷"
+            }
+        }
+        decimainPoint = false
+    }
+    @IBAction func buttonPercentage(_ sender: Any) {//百分比运算
+        var last:Character = " "
+        if caculateDisplay.text! == "" {
+        } else {
+            last = caculateDisplay.text!.last!
+            if JudgementNumber(number:last) || last == ")" {
+                //在数字和右括号后面
+                caculateDisplay.text = caculateDisplay.text!+"%"
+            }
+        }
+        decimainPoint = false
+    }
+    @IBAction func buttonBrs(_ sender: Any) {//(-
+        var last:Character = " "
+        if caculateDisplay.text! == "" {//屏幕为空
+            caculateDisplay.text = "(-"
+            LeftBracketsCount = LeftBracketsCount + 1
+        } else {
+            last = caculateDisplay.text!.last!
+            if JudgementNumber(number:last) {//数字后面
+                caculateDisplay.text = caculateDisplay.text!+"×(-"
+                LeftBracketsCount = LeftBracketsCount + 1
+            } else {
+                caculateDisplay.text = caculateDisplay.text!+"(-"
+                LeftBracketsCount = LeftBracketsCount + 1
+            }
+        }
     }
     @IBAction func buttonBs(_ sender: Any) {//退格
-        if caculateDisplay.text! == "0"{
+        if caculateDisplay.text! == ""{
         } else {
-        (caculateDisplay.text!).remove(at: (caculateDisplay.text!).index(before: (caculateDisplay.text!).endIndex))
+        (caculateDisplay.text!).remove(at: (caculateDisplay.text!).index(before: (caculateDisplay.text!).endIndex))//清除最后一位
         }
       
     }
@@ -394,11 +514,37 @@ class ViewController: UIViewController {
         //w=375   h=666
         
         //let button1:UIButton = UIButton(type:.contactAdd)
-        postfixExpression(str:caculateDisplay.text!)
-        
-        judgmentResult = true
-    
+        var last:Character = " "
+        if caculateDisplay.text! == "" {//屏幕为空时
+        } else {
+            last = caculateDisplay.text!.last!
+            if !JudgementNumber(number:last) {//最后一位非数字为错误表达式
+                let alertController = UIAlertController(title: "格式错误",message: nil, preferredStyle: .alert)
+                //显示提示框
+                self.present(alertController, animated: true, completion: nil)
+                //两秒钟后自动消失
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
+                    self.presentedViewController?.dismiss(animated: false, completion: nil)
+                }
+            } else {
+                while LeftBracketsCount != RightBracketsCount {
+                    //当左右括号数量不相等时，补全k括号
+                    caculateDisplay.text = caculateDisplay.text!+")"
+                    RightBracketsCount = RightBracketsCount + 1
+                    if LeftBracketsCount == RightBracketsCount {//当左括号数量等于右括号时
+                        postfixExpression(str:caculateDisplay.text!)
+                    }
+                }
+                postfixExpression(str:caculateDisplay.text!)
+                decimainPoint = false//判断小数点
+                judgmentResult = false//判断结果
+                parenthesisJudgement = false//括号判断
+                LeftBracketsCount = 0//左括号
+                RightBracketsCount = 0//右括号
+            }
+        }
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
