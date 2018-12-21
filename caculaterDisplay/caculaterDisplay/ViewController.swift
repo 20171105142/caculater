@@ -49,7 +49,9 @@ class ViewController: UIViewController {
     var decimainPoint:Bool = false//判断小数点
     var judgmentResult:Bool = false//结果刷新
     var parenthesisJudgement:Bool = false //判断括号
-    
+    var numberCount:Int = 0//数字计数
+    var operatorCount:Int = 0//运算符计数
+    var decimalCount:Int = 0
     public func JudgementNumber(number:Character)->Bool
     {
         //判断字符是否为数字
@@ -213,56 +215,101 @@ class ViewController: UIViewController {
         //显示答案
     }
     
+    public func numberDigits()->Bool
+    {
+        if numberCount == 15 {
+            let alertController = UIAlertController(title: "最大位数15",message: nil, preferredStyle: .alert)
+            //显示提示框
+            self.present(alertController, animated: true, completion: nil)
+            //两秒钟后自动消失
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
+                self.presentedViewController?.dismiss(animated: false, completion: nil)
+            }
+            return true
+        } else {
+            return false
+        }
+    }
     @IBOutlet weak var caculateDisplay: UILabel!
     
     
     @IBAction func Button0(_ sender: Any) {
-        var last:Character = " "
-        if caculateDisplay.text! == ""{//屏幕为空时
-            caculateDisplay.text = "0"
-        } else if !judgmentResult {//没有按下等号
-            last = caculateDisplay.text!.last!
-            if last == ")" || last == "%" {
-                //最后一位 为“），%”
-                caculateDisplay.text = caculateDisplay.text!+"×0"
+        if numberDigits() {
+        } else {
+            var last:Character = " "
+            if caculateDisplay.text! == ""{//屏幕为空时
+                caculateDisplay.text = "0"
+            } else if !judgmentResult {//没有按下等号
+                last = caculateDisplay.text!.last!
+                if last == ")" || last == "%" {
+                    //最后一位 为“），%”
+                    caculateDisplay.text = caculateDisplay.text!+"×0"
+                } else {
+                    caculateDisplay.text = caculateDisplay.text!+"0"
+                }
             } else {
-                caculateDisplay.text = caculateDisplay.text!+"0"
+                caculateDisplay.text = "0"
             }
+            if decimainPoint {
+                decimalCount = decimalCount + 1
+            } else {
+                numberCount = numberCount + 1
+            }
+            judgmentResult = false//结果刷新
+            parenthesisJudgement = true//括号判断
         }
-        judgmentResult = false//结果刷新
-        parenthesisJudgement = true//括号判断
     }
     @IBAction func Button1(_ sender: Any) {
-        var last:Character = " "
-        if caculateDisplay.text! == ""{//屏幕为空时
-            caculateDisplay.text = "1"
-        } else if !judgmentResult {//没有按下等号
-            last = caculateDisplay.text!.last!
-            if last == ")" || last == "%" {
-                //最后一位 为“），%”
-                caculateDisplay.text = caculateDisplay.text!+"×1"
+        if numberDigits() {
+        } else {
+            var last:Character = " "
+            if caculateDisplay.text! == ""{//屏幕为空时
+                caculateDisplay.text = "1"
+            } else if !judgmentResult {//没有按下等号
+                last = caculateDisplay.text!.last!
+                if last == ")" || last == "%" {
+                    //最后一位 为“），%”
+                    caculateDisplay.text = caculateDisplay.text!+"×1"
+                } else {
+                    caculateDisplay.text = caculateDisplay.text!+"1"
+                }
             } else {
-                caculateDisplay.text = caculateDisplay.text!+"1"
+                caculateDisplay.text = "1"
             }
+            if decimainPoint {
+                decimalCount = decimalCount + 1
+            } else {
+                numberCount = numberCount + 1
+            }
+            judgmentResult = false
+            parenthesisJudgement = true//括号判断
         }
-        judgmentResult = false
-        parenthesisJudgement = true//括号判断
     }
     @IBAction func Button2(_ sender: Any) {
-        var last:Character = " "
-        if caculateDisplay.text! == ""{//屏幕为空时
-            caculateDisplay.text = "2"
-        } else if !judgmentResult {//没有按下等号
-            last = caculateDisplay.text!.last!
-            if last == ")" || last == "%" {
-                //最后一位 为“），%”
-                caculateDisplay.text = caculateDisplay.text!+"×2"
+        if numberDigits() {
+        } else {
+            var last:Character = " "
+            if caculateDisplay.text! == ""{//屏幕为空时
+                caculateDisplay.text = "2"
+            } else if !judgmentResult {//没有按下等号
+                last = caculateDisplay.text!.last!
+                if last == ")" || last == "%" {
+                    //最后一位 为“），%”
+                    caculateDisplay.text = caculateDisplay.text!+"×2"
+                } else {
+                    caculateDisplay.text = caculateDisplay.text!+"2"
+                }
             } else {
-                caculateDisplay.text = caculateDisplay.text!+"2"
+                caculateDisplay.text = "2"
             }
+            if decimainPoint {
+                decimalCount = decimalCount + 1
+            } else {
+                numberCount = numberCount + 1
+            }
+            judgmentResult = false
+            parenthesisJudgement = true//括号判断
         }
-        judgmentResult = false
-        parenthesisJudgement = true//括号判断
     }
     @IBAction func Button3(_ sender: Any) {
         var last:Character = " "
@@ -276,6 +323,13 @@ class ViewController: UIViewController {
             } else {
                 caculateDisplay.text = caculateDisplay.text!+"3"
             }
+        } else {
+            caculateDisplay.text = "3"
+        }
+        if decimainPoint {
+            decimalCount = decimalCount + 1
+        } else {
+            numberCount = numberCount + 1
         }
         judgmentResult = false
         parenthesisJudgement = true//括号判断
@@ -292,6 +346,13 @@ class ViewController: UIViewController {
             } else {
                 caculateDisplay.text = caculateDisplay.text!+"4"
             }
+        } else {
+            caculateDisplay.text = "4"
+        }
+        if decimainPoint {
+            decimalCount = decimalCount + 1
+        } else {
+            numberCount = numberCount + 1
         }
         judgmentResult = false
         parenthesisJudgement = true//括号判断
@@ -308,6 +369,13 @@ class ViewController: UIViewController {
             } else {
                 caculateDisplay.text = caculateDisplay.text!+"5"
             }
+        } else {
+            caculateDisplay.text = "5"
+        }
+        if decimainPoint {
+            decimalCount = decimalCount + 1
+        } else {
+            numberCount = numberCount + 1
         }
         judgmentResult = false
         parenthesisJudgement = true//括号判断
@@ -324,6 +392,13 @@ class ViewController: UIViewController {
             } else {
                 caculateDisplay.text = caculateDisplay.text!+"6"
             }
+        } else {
+            caculateDisplay.text = "6"
+        }
+        if decimainPoint {
+            decimalCount = decimalCount + 1
+        } else {
+            numberCount = numberCount + 1
         }
         judgmentResult = false
         parenthesisJudgement = true//括号判断
@@ -340,6 +415,13 @@ class ViewController: UIViewController {
             } else {
                 caculateDisplay.text = caculateDisplay.text!+"7"
             }
+        } else {
+            caculateDisplay.text = "7"
+        }
+        if decimainPoint {
+            decimalCount = decimalCount + 1
+        } else {
+            numberCount = numberCount + 1
         }
         judgmentResult = false
         parenthesisJudgement = true//括号判断
@@ -356,6 +438,13 @@ class ViewController: UIViewController {
             } else {
                 caculateDisplay.text = caculateDisplay.text!+"8"
             }
+        } else {
+            caculateDisplay.text = "8"
+        }
+        if decimainPoint {
+            decimalCount = decimalCount + 1
+        } else {
+            numberCount = numberCount + 1
         }
         judgmentResult = false
         parenthesisJudgement = true//括号判断
@@ -372,6 +461,13 @@ class ViewController: UIViewController {
             } else {
                 caculateDisplay.text = caculateDisplay.text!+"9"
             }
+        } else {
+            caculateDisplay.text = "9"
+        }
+        if decimainPoint {
+            decimalCount = decimalCount + 1
+        } else {
+            numberCount = numberCount + 1
         }
         judgmentResult = false
         parenthesisJudgement = true//括号判断
@@ -389,6 +485,7 @@ class ViewController: UIViewController {
             }
         }
         decimainPoint = true//小数点
+        numberCount = 0
     }
     
     @IBAction func buttonBrackets(_ sender: Any) {//括号
@@ -397,8 +494,8 @@ class ViewController: UIViewController {
             caculateDisplay.text = caculateDisplay.text!+"("
             LeftBracketsCount = LeftBracketsCount + 1
         } else {
-            if !parenthesisJudgement || LeftBracketsCount == RightBracketsCount {//按下操作符h或左右括号数量相等
-                last = caculateDisplay.text!.last!
+            last = caculateDisplay.text!.last!
+            if !parenthesisJudgement || LeftBracketsCount == RightBracketsCount {//按下数字h或左右括号数量相等
                 if JudgementNumber(number:last) || last == ")" || last == "%" {
                     //在数字，右括号，百分号后面
                     caculateDisplay.text = caculateDisplay.text!+"×("
@@ -409,8 +506,14 @@ class ViewController: UIViewController {
                 }
             } else if parenthesisJudgement && RightBracketsCount < LeftBracketsCount {
                 //左h括号数量大于右括号
-                caculateDisplay.text = caculateDisplay.text!+")"
-                RightBracketsCount = RightBracketsCount + 1
+                if last == "×" {
+                    caculateDisplay.text = caculateDisplay.text!+"("
+                    LeftBracketsCount = LeftBracketsCount + 1
+                } else {
+                    caculateDisplay.text = caculateDisplay.text!+")"
+                    RightBracketsCount = RightBracketsCount + 1
+                    print("2")
+                }
             }
         }
         if LeftBracketsCount == RightBracketsCount {//当左括号数量等于右括号时
@@ -424,6 +527,8 @@ class ViewController: UIViewController {
         parenthesisJudgement = false//括号判断
         LeftBracketsCount = 0//左括号
         RightBracketsCount = 0//右括号
+        numberCount = 0
+        operatorCount = 0
     }
     @IBAction func buttonAdd(_ sender: Any) {//加法
         var last:Character = " "
@@ -436,6 +541,8 @@ class ViewController: UIViewController {
             }
         }
         decimainPoint = false
+        operatorCount = operatorCount + 1
+        numberCount = 0
     }
     @IBAction func buttonSub(_ sender: Any) {//减法
         var last:Character = " "
@@ -448,6 +555,8 @@ class ViewController: UIViewController {
             }
         }
         decimainPoint = false
+        operatorCount = operatorCount + 1
+        numberCount = 0
     }
     @IBAction func buttonMul(_ sender: Any) {//乘法
         var last:Character = " "
@@ -460,6 +569,8 @@ class ViewController: UIViewController {
             }
         }
         decimainPoint = false
+        operatorCount = operatorCount + 1
+        numberCount = 0
     }
     @IBAction func buttonDiv(_ sender: Any) {//除法
         var last:Character = " "
@@ -472,6 +583,8 @@ class ViewController: UIViewController {
             }
         }
         decimainPoint = false
+        operatorCount = operatorCount + 1
+        numberCount = 0
     }
     @IBAction func buttonPercentage(_ sender: Any) {//百分比运算
         var last:Character = " "
@@ -484,6 +597,8 @@ class ViewController: UIViewController {
             }
         }
         decimainPoint = false
+        operatorCount = operatorCount + 1
+        numberCount = 0
     }
     @IBAction func buttonBrs(_ sender: Any) {//(-
         var last:Character = " "
@@ -500,13 +615,37 @@ class ViewController: UIViewController {
                 LeftBracketsCount = LeftBracketsCount + 1
             }
         }
+        operatorCount = operatorCount + 1
     }
     @IBAction func buttonBs(_ sender: Any) {//退格
+        var last:Character = " "
+        //str = caculateDisplay.text!
         if caculateDisplay.text! == ""{
         } else {
-        (caculateDisplay.text!).remove(at: (caculateDisplay.text!).index(before: (caculateDisplay.text!).endIndex))//清除最后一位
+            last = caculateDisplay.text!.last!
+            if last == "(" {//删除左括号
+                (caculateDisplay.text!).remove(at: (caculateDisplay.text!).index(before: (caculateDisplay.text!).endIndex))//清除最后一位
+                LeftBracketsCount = LeftBracketsCount - 1
+            } else if last == ")" {//删除右括号
+                (caculateDisplay.text!).remove(at: (caculateDisplay.text!).index(before: (caculateDisplay.text!).endIndex))//清除最后一位
+                RightBracketsCount = RightBracketsCount - 1
+            } else if JudgementNumber(number:last) {//删除数字
+                (caculateDisplay.text!).remove(at: (caculateDisplay.text!).index(before: (caculateDisplay.text!).endIndex))//清除最后一位
+                //数字-1
+                if numberCount >= 0{
+                    numberCount = numberCount - 1
+                }
+            } else if last == "." {
+                (caculateDisplay.text!).remove(at: (caculateDisplay.text!).index(before: (caculateDisplay.text!).endIndex))//清除最后一位
+                decimalCount = decimalCount - 1
+                decimainPoint = false//判断小数点
+            } else if !JudgementNumber(number:last) || last != "." {
+                (caculateDisplay.text!).remove(at: (caculateDisplay.text!).index(before: (caculateDisplay.text!).endIndex))//清除最后一位
+                if operatorCount >= 0{
+                    operatorCount = operatorCount - 1
+                }
+            }
         }
-      
     }
     @IBAction func buttonCaculator(_ sender: Any) {//等于
      //   switch num{
@@ -528,7 +667,7 @@ class ViewController: UIViewController {
                 }
             } else {
                 while LeftBracketsCount != RightBracketsCount {
-                    //当左右括号数量不相等时，补全k括号
+                    //当左右括号数量不相等时，补全括号
                     caculateDisplay.text = caculateDisplay.text!+")"
                     RightBracketsCount = RightBracketsCount + 1
                     if LeftBracketsCount == RightBracketsCount {//当左括号数量等于右括号时
@@ -537,10 +676,12 @@ class ViewController: UIViewController {
                 }
                 postfixExpression(str:caculateDisplay.text!)
                 decimainPoint = false//判断小数点
-                judgmentResult = false//判断结果
+                judgmentResult = true//判断结果
                 parenthesisJudgement = false//括号判断
                 LeftBracketsCount = 0//左括号
                 RightBracketsCount = 0//右括号
+                numberCount = 0//数字计数
+                operatorCount = 0//运算符计数
             }
         }
     }
