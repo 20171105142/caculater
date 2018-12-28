@@ -117,25 +117,6 @@ class ViewController: UIViewController {
         }
         return 0
     }
-    enum OperationError : Error {
-        case FormatError
-        case DivisorError
-    }
-    func numberTest(num:Int) throws{
-        if num == 1 {
-            print("成功")
-        }else if num == 2 {
-            throw OperationError.FormatError
-        }else {
-            throw OperationError.DivisorError
-        }
-    }
-    func throwDeliver(num:Int) throws ->String {
-        print("错误传递")
-        try numberTest(num: num)
-        print("未传递错误")
-        return "无错误"
-    }
     
     public func readSuffix(suffix:inout [Character])->Double {
         //读取后缀表达式
@@ -163,7 +144,7 @@ class ViewController: UIViewController {
                     a = numberStack.peek()!//第一个运算数
                     _=numberStack.pop()
                 } else {
-                    promptBox(text: "格式错误1")
+                    promptBox(text: "格式错误")
                 }
                 if sff == "%" {//百分号运算
                     numberStack.push(cauculate(ch: sff, left: 100, right: a))
@@ -174,7 +155,7 @@ class ViewController: UIViewController {
                         numberStack.push(cauculate(ch: sff, left: b, right: a))
                         //遇到符号时，取栈顶的第二个数和第一个数求解，并入栈
                     } else {
-                        promptBox(text: "格式错误2")
+                        promptBox(text: "格式错误")
                     }
                 }
             }
@@ -190,7 +171,7 @@ class ViewController: UIViewController {
         if (numberStack.peek() != nil) {
             return numberStack.peek()!
         } else {
-            promptBox(text: "格式错误3")
+            promptBox(text: "格式错误")
             return 1
         }
     }
