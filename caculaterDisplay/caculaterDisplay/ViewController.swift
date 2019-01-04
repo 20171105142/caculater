@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 public struct Stack <T>{
     //堆栈定义
     fileprivate var array: [T] = []//堆栈数组
@@ -39,8 +40,6 @@ extension Double{
         return (self * divisor).rounded() / divisor
     }
 }
-
-
 
 class ViewController: UIViewController {
     
@@ -309,6 +308,7 @@ class ViewController: UIViewController {
     }
     
     @IBOutlet weak var caculateDisplay: UILabel!
+    @IBOutlet weak var SubsidiaryDisplay: UILabel!
     
     @IBAction func Button0(_ sender: Any) {
         numberButton(number: "0")
@@ -340,7 +340,7 @@ class ViewController: UIViewController {
     @IBAction func Button9(_ sender: Any) {
         numberButton(number: "9")
     }
-    @IBAction func buttonDot(_ sender: Any) {//小数点
+    @IBAction func ButtonDot(_ sender: Any) {//小数点
         var last:Character = " "
         if caculateDisplay.text! == "" {//当屏幕为空时
             caculateDisplay.text = "0."
@@ -360,7 +360,7 @@ class ViewController: UIViewController {
         }
     }
     
-    @IBAction func buttonBrackets(_ sender: Any) {//括号
+    @IBAction func ButtonBrackets(_ sender: Any) {//括号
         var last:Character = " "
         if caculateDisplay.text! == "" {//屏幕为空时
             caculateDisplay.text = caculateDisplay.text!+"("
@@ -394,7 +394,7 @@ class ViewController: UIViewController {
             parenthesisJudgement = false
         }
     }
-    @IBAction func clear(_ sender: Any) {
+    @IBAction func ButtonClear(_ sender: Any) {
         caculateDisplay.text = ""
         decimainPoint = false//判断小数点
         judgmentResult = false//判断结果
@@ -417,7 +417,7 @@ class ViewController: UIViewController {
     @IBAction func buttonDiv(_ sender: Any) {//除法
         operatorButton(operator1: "÷")
     }
-    @IBAction func buttonPercentage(_ sender: Any) {//百分比运算
+    @IBAction func ButtonPercentage(_ sender: Any) {//百分比运算
         var last:Character = " "
         if caculateDisplay.text! == "" {
         } else {
@@ -499,13 +499,94 @@ class ViewController: UIViewController {
             if LeftBracketsCount == RightBracketsCount {//当左括号数量等于右括号时
                 postfixExpression(str:caculateDisplay.text!)
             }
-            }
+        }
     }
+    
+    @IBOutlet weak var Button: UIButton!
+    @IBOutlet weak var Button1: UIButton!
+    @IBOutlet weak var Button2: UIButton!
+    @IBOutlet weak var Button3: UIButton!
+    @IBOutlet weak var Button4: UIButton!
+    @IBOutlet weak var Button5: UIButton!
+    @IBOutlet weak var Button6: UIButton!
+    @IBOutlet weak var Button7: UIButton!
+    @IBOutlet weak var Button8: UIButton!
+    @IBOutlet weak var Button9: UIButton!
+    @IBOutlet weak var ButtonCle: UIButton!
+    @IBOutlet weak var ButtonBra: UIButton!
+    @IBOutlet weak var ButtonPer: UIButton!
+    @IBOutlet weak var ButtonDiv: UIButton!
+    @IBOutlet weak var ButtonMul: UIButton!
+    @IBOutlet weak var ButtonSub: UIButton!
+    @IBOutlet weak var ButtonAdd: UIButton!
+    @IBOutlet weak var ButtonBrs: UIButton!
+    @IBOutlet weak var ButtonDot: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        caculateDisplay.lineBreakMode = NSLineBreakMode.byWordWrapping
+        caculateDisplay.numberOfLines = 0
+        // 文本换行
+        ButtonCle.layer.borderColor = UIColor.init(displayP3Red: 0, green: 0, blue: 255, alpha: 0.1).cgColor
+        ButtonCle.layer.borderWidth = 1
+        
+        
+        
+        ButtonPer.layer.borderColor = UIColor.init(displayP3Red: 0, green: 0, blue: 255, alpha: 0.1).cgColor
+        ButtonPer.layer.borderWidth = 1
+        
+        ButtonDiv.layer.borderColor = UIColor.init(displayP3Red: 0, green: 0, blue: 255, alpha: 0.1).cgColor
+        ButtonDiv.layer.borderWidth = 1
+        
+        ButtonMul.layer.borderColor = UIColor.init(displayP3Red: 0, green: 0, blue: 255, alpha: 0.1).cgColor
+        ButtonMul.layer.borderWidth = 1
+        
+        ButtonSub.layer.borderColor = UIColor.init(displayP3Red: 0, green: 0, blue: 255, alpha: 0.1).cgColor
+        ButtonSub.layer.borderWidth = 1
+        
+        ButtonAdd.layer.borderColor = UIColor.init(displayP3Red: 0, green: 0, blue: 255, alpha: 0.1).cgColor
+        ButtonAdd.layer.borderWidth = 1
+        
+        ButtonBra.layer.borderColor = UIColor.init(displayP3Red: 0, green: 0, blue: 255, alpha: 0.1).cgColor
+        ButtonBra.layer.borderWidth = 1
+        
+        ButtonBrs.layer.borderColor = UIColor.init(displayP3Red: 0, green: 0, blue: 255, alpha: 0.1).cgColor
+        ButtonBrs.layer.borderWidth = 1
+        
+        ButtonDot.layer.borderColor = UIColor.init(displayP3Red: 0, green: 0, blue: 255, alpha: 0.1).cgColor
+        ButtonDot.layer.borderWidth = 1
+        
+        Button.layer.borderColor = UIColor.init(displayP3Red: 0, green: 0, blue: 255, alpha: 0.1).cgColor
+        Button.layer.borderWidth = 1
+        
+        Button1.layer.borderColor = UIColor.init(displayP3Red: 0, green: 0, blue: 255, alpha: 0.1).cgColor
+        Button1.layer.borderWidth = 1
+        
+        Button2.layer.borderColor = UIColor.init(displayP3Red: 0, green: 0, blue: 255, alpha: 0.1).cgColor
+        Button2.layer.borderWidth = 1
+        
+        Button3.layer.borderColor = UIColor.init(displayP3Red: 0, green: 0, blue: 255, alpha: 0.1).cgColor
+        Button3.layer.borderWidth = 1
+        
+        Button4.layer.borderColor = UIColor.init(displayP3Red: 0, green: 0, blue: 255, alpha: 0.1).cgColor
+        Button4.layer.borderWidth = 1
+        
+        Button5.layer.borderColor = UIColor.init(displayP3Red: 0, green: 0, blue: 255, alpha: 0.1).cgColor
+        Button5.layer.borderWidth = 1
+        
+        Button6.layer.borderColor = UIColor.init(displayP3Red: 0, green: 0, blue: 255, alpha: 0.1).cgColor
+        Button6.layer.borderWidth = 1
+        
+        Button7.layer.borderColor = UIColor.init(displayP3Red: 0, green: 0, blue: 255, alpha: 0.1).cgColor
+        Button7.layer.borderWidth = 1
+        
+        Button8.layer.borderColor = UIColor.init(displayP3Red: 0, green: 0, blue: 255, alpha: 0.1).cgColor
+        Button8.layer.borderWidth = 1
+        
+        Button9.layer.borderColor = UIColor.init(displayP3Red: 0, green: 0, blue: 255, alpha: 0.1).cgColor
+        Button9.layer.borderWidth = 1
+        
     }
-
-
 }
 
