@@ -41,6 +41,15 @@ extension Double{
     }
 }
 
+enum ExpressionError : Error {
+    case DividedZero
+    case OperandsError
+}
+func PrintError(number:Double)throws {
+    if Int(number) == 0 {
+        throw ExpressionError.DividedZero
+    }
+}
 class ViewController: UIViewController {
     
     var LeftBracketsCount:Int = 0//左括号计数
@@ -104,12 +113,17 @@ class ViewController: UIViewController {
         case "×"://乘法
             return left * right
         case "÷"://除法
-            if right == 0.0 {
-                promptBox(text: "不可除以0")
-            } else {
+            do {
+                try PrintError(number: right)
                 return left / right
+            } catch {
+                switch (error){
+                case ExpressionError.DividedZero:promptBox(text: "不可除以0")
+                default:
+                    promptBox(text: "未知错误")
+                }
             }
-        case "%"://
+        case "%"://百分号运算
             return right/left
         default:
             return 0
@@ -167,12 +181,12 @@ class ViewController: UIViewController {
             _=numberStack.pop()
             numberStack.push(cauculate(ch: suffix.last!, left: b, right: a))
         }
-        if (numberStack.peek() != nil) {
-            return numberStack.peek()!
-        } else {
+        if (numberStack.peek() == nil) {
             promptBox(text: "格式错误")
-            return 1
+        } else {
+            return numberStack.peek()!
         }
+        return 1
     }
     
     public func postfixExpression(str:String)
@@ -226,17 +240,16 @@ class ViewController: UIViewController {
             suffix.append(operatorStack.peek()!)
             _=operatorStack.pop()
         }
-        if readSuffix(suffix: &suffix) != 1 {
-            caculateDisplay.text = "\(readSuffix(suffix: &suffix).roundTo(places: 10))"
-            decimainPoint = false//判断小数点
-            //judgmentResult = true//判断结果
-            parenthesisJudgement = false//括号判断
-            LeftBracketsCount = 0//左括号
-            RightBracketsCount = 0//右括号
-            numberCount = 0//数字计数
-            operatorCount = 0//运算符计数
-            judgmentResult = true
-        }
+        caculateDisplay.text = "\(readSuffix(suffix: &suffix).roundTo(places: 10))"
+        decimainPoint = false//判断小数点
+        //judgmentResult = true//判断结果
+        parenthesisJudgement = false//括号判断
+        LeftBracketsCount = 0//左括号
+        RightBracketsCount = 0//右括号
+        numberCount = 0//数字计数
+        operatorCount = 0//运算符计数
+        judgmentResult = true
+        
     }
     
     public func promptBox(text:String)
