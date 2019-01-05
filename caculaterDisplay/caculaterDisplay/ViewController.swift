@@ -142,7 +142,7 @@ class ViewController: UIViewController {
                 return String(left / right)
             } catch {
                 switch (error){
-                case ExpressionError.DividedZero:promptBox(text: "不可除以0")
+                case ExpressionError.DividedZero:DividedZero = false
                 default:
                     promptBox(text: "未知错误")
                 }
@@ -178,7 +178,7 @@ class ViewController: UIViewController {
                 a = numberStack.peek()!//第一个运算数
                 _=numberStack.pop()
                 } else {
-                 promptBox(text: "格式错误")
+                 OperandsError = false
                 }
                 if sff == "%" {//百分号运算
                     numberStack.push(Double(cauculate(ch: sff, left: 100, right: a))!)
@@ -191,7 +191,7 @@ class ViewController: UIViewController {
                         }
                     //遇到符号时，取栈顶的第二个数和第一个数求解，并入栈
                     } else {
-                     promptBox(text: "格式错误")
+                     OperandsError = false
                      }
                 }
             }
@@ -205,7 +205,7 @@ class ViewController: UIViewController {
             numberStack.push(Double(cauculate(ch: suffix.last!, left: b, right: a))!)
         }
         if (numberStack.peek() == nil) {
-        promptBox(text: "格式错误")
+        OperandsError = false
         } else {
         return String(numberStack.peek()!)
         }
@@ -264,15 +264,7 @@ class ViewController: UIViewController {
             _=operatorStack.pop()
         }
         if readSuffix(suffix: &suffix) != "error" {
-            caculateDisplay.text = "\(deleteZero(result: String(Double(readSuffix(suffix: &suffix))!.roundTo(places: 10))))"
-            decimainPoint = false//判断小数点
-            //judgmentResult = true//判断结果
-            parenthesisJudgement = false//括号判断
-            LeftBracketsCount = 0//左括号
-            RightBracketsCount = 0//右括号
-            numberCount = 0//数字计数
-            operatorCount = 0//运算符计数
-            judgmentResult = true
+            SubsidiaryDisplay.text = "\(deleteZero(result: String(Double(readSuffix(suffix: &suffix))!.roundTo(places: 10))))"
         }
     }
     
@@ -309,17 +301,16 @@ class ViewController: UIViewController {
                     caculateDisplay.text = caculateDisplay.text!+number
                 }
             } else {
-                print(judgmentResult)
                 caculateDisplay.text = number
             }
             if decimainPoint {
                 decimalCount = decimalCount + 1
             }
             numberCount = numberCount + 1
-            print(numberCount)
             judgmentResult = false
             parenthesisJudgement = true//括号判断
         }
+        postfixExpression(str:caculateDisplay.text!)
     }
     
     public func operatorButton(operator1:String)//运算符按键函数
@@ -342,6 +333,7 @@ class ViewController: UIViewController {
             operatorCount = operatorCount + 1
             numberCount = 0
         }
+        SubsidiaryDisplay.text = ""
     }
     
     @IBOutlet weak var caculateDisplay: UILabel!
@@ -433,9 +425,12 @@ class ViewController: UIViewController {
     }
     @IBAction func ButtonClear(_ sender: Any) {
         caculateDisplay.text = ""
+        SubsidiaryDisplay.text = ""
         decimainPoint = false//判断小数点
         judgmentResult = false//判断结果
         parenthesisJudgement = false//括号判断
+        DividedZero = false
+        OperandsError = false
         LeftBracketsCount = 0//左括号
         RightBracketsCount = 0//右括号
         numberCount = 0
@@ -467,6 +462,7 @@ class ViewController: UIViewController {
             decimainPoint = false
             numberCount = 0
         }
+        postfixExpression(str:caculateDisplay.text!)
     }
     @IBAction func buttonBrs(_ sender: Any) {//(-
         var last:Character = " "
@@ -507,6 +503,7 @@ class ViewController: UIViewController {
                 (caculateDisplay.text!).remove(at: (caculateDisplay.text!).index(before: (caculateDisplay.text!).endIndex))//清除最后一位
                 //数字-1
                 numberCount = numberCount - 1
+                SubsidiaryDisplay.text = ""
             } else if last == "." {
                 (caculateDisplay.text!).remove(at: (caculateDisplay.text!).index(before: (caculateDisplay.text!).endIndex))//清除最后一位
                 decimalCount = decimalCount - 1
@@ -516,6 +513,7 @@ class ViewController: UIViewController {
                 operatorCount = operatorCount - 1
             }
         }
+        postfixExpression(str:caculateDisplay.text!)
     }
     @IBAction func buttonCaculator(_ sender: Any) {//等于
      //   switch num{
@@ -525,7 +523,6 @@ class ViewController: UIViewController {
         //let button1:UIButton = UIButton(type:.contactAdd)
         if caculateDisplay.text! == "" {//屏幕为空时
         } else if operatorCount == 0 {
-            print("a")
         } else {
             while LeftBracketsCount != RightBracketsCount {
                 //当左右括号数量不相等时，补全括号
@@ -533,9 +530,26 @@ class ViewController: UIViewController {
                 RightBracketsCount = RightBracketsCount + 1
                 }
                 //postfixExpression(str:caculateDisplay.text!)
-            if LeftBracketsCount == RightBracketsCount {//当左括号数量等于右括号时
-                postfixExpression(str:caculateDisplay.text!)
+            if DividedZero {
+                print(DividedZero)
+                promptBox(text: "不可除以0")
+            } else if OperandsError {
+                promptBox(text: "格式错误")
+            } else {
+                caculateDisplay.text! = SubsidiaryDisplay.text!
+                SubsidiaryDisplay.text = ""
+                decimainPoint = false//判断小数点
+                judgmentResult = true//判断结果
+                parenthesisJudgement = false//括号判断
+                LeftBracketsCount = 0//左括号
+                RightBracketsCount = 0//右括号
+                numberCount = 0//数字计数
+                operatorCount = 0//运算符计数
             }
+        }
+        
+        if LeftBracketsCount == RightBracketsCount {//当左括号数量等于右括号时
+            
         }
     }
     
