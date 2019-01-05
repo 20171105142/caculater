@@ -42,10 +42,10 @@ extension Double{
 }
 
 enum ExpressionError : Error {
-    case DividedZero
+    case DividedZero//除数为0错误
     case OperandsError
 }
-func PrintError(number:Double)throws {
+func PrintError(number:Double) throws {
     if Int(number) == 0 {
         throw ExpressionError.DividedZero
     }
@@ -57,6 +57,8 @@ class ViewController: UIViewController {
     var decimainPoint:Bool = false//判断小数点
     var judgmentResult:Bool = false//结果刷新
     var parenthesisJudgement:Bool = false //判断括号
+    var DividedZero:Bool = false//被除数为0
+    var OperandsError:Bool = false//运算数为0
     var numberCount:Int = 0//数字计数
     var operatorCount:Int = 0//运算符计数
     var decimalCount:Int = 0//小数点后位数计数
@@ -97,25 +99,47 @@ class ViewController: UIViewController {
         }
     }
     
+    public func deleteZero (result:String )->String {
+        //删除结果中".0"
+        var tempResult = result
+        var i = 1
+        if result.contains(".") {
+            while i < result.count {
+                if tempResult.hasSuffix("0") {
+                    tempResult.remove(at: tempResult.index(before: tempResult.endIndex))
+                    i = i + 1
+                } else {
+                    break
+                }
+            }
+            if tempResult.hasSuffix(".") {
+                tempResult.remove(at: tempResult.index(before: tempResult.endIndex))
+            }
+            return tempResult
+        } else {
+            return result
+        }
+    }
+    
     public func addSpace(blank:inout [Character] )
     {   //为数字后添加空格
         blank.append (" ")
     }
 
-    public func cauculate( ch:Character, left:Double , right:Double )->Double
+    public func cauculate( ch:Character, left:Double , right:Double )->String
     {
         //对运算数和运算符进行计算
         switch ch {
         case "+"://加法
-            return left + right
+            return String(left + right)
         case "-"://减法
-            return left - right
+            return String(left - right)
         case "×"://乘法
-            return left * right
+            return String(left * right)
         case "÷"://除法
             do {
                 try PrintError(number: right)
-                return left / right
+                return String(left / right)
             } catch {
                 switch (error){
                 case ExpressionError.DividedZero:promptBox(text: "不可除以0")
@@ -124,23 +148,20 @@ class ViewController: UIViewController {
                 }
             }
         case "%"://百分号运算
-            return right/left
+            return String(right / left)
         default:
-            return 0
+            return "error"
         }
-        return 0
+        return "error"
     }
     
-    public func readSuffix(suffix:inout [Character])->Double {
+    public func readSuffix(suffix:inout [Character])->String {
         //读取后缀表达式
         var a:Double = 0.0//左运算数
         var b:Double = 0.0//右运算数
         var number = [Character]()
         var numberStr:String = ""
         var numberStack = Stack<Double>()//数字堆栈
-        do{
-            
-        }
         for sff in suffix {
             if sff == " " {//当遇到空格时
                 numberStr = String (number)//将number数组转化为字符串
@@ -154,22 +175,24 @@ class ViewController: UIViewController {
                 number.append(sff)
             } else {//当遇到运算符
                 if (numberStack.peek() != nil){
-                    a = numberStack.peek()!//第一个运算数
-                    _=numberStack.pop()
+                a = numberStack.peek()!//第一个运算数
+                _=numberStack.pop()
                 } else {
-                    promptBox(text: "格式错误")
+                 promptBox(text: "格式错误")
                 }
                 if sff == "%" {//百分号运算
-                    numberStack.push(cauculate(ch: sff, left: 100, right: a))
+                    numberStack.push(Double(cauculate(ch: sff, left: 100, right: a))!)
                 } else {
                     if (numberStack.peek() != nil) {
-                        b = numberStack.peek()!
-                        _=numberStack.pop()
-                        numberStack.push(cauculate(ch: sff, left: b, right: a))
-                        //遇到符号时，取栈顶的第二个数和第一个数求解，并入栈
+                    b = numberStack.peek()!
+                    _=numberStack.pop()
+                        if cauculate(ch: sff, left: b, right: a) != "error" {
+                            numberStack.push(Double(cauculate(ch: sff, left: b, right: a))!)
+                        }
+                    //遇到符号时，取栈顶的第二个数和第一个数求解，并入栈
                     } else {
-                        promptBox(text: "格式错误")
-                    }
+                     promptBox(text: "格式错误")
+                     }
                 }
             }
         }
@@ -179,14 +202,14 @@ class ViewController: UIViewController {
             _=numberStack.pop()
             b = numberStack.peek()!
             _=numberStack.pop()
-            numberStack.push(cauculate(ch: suffix.last!, left: b, right: a))
+            numberStack.push(Double(cauculate(ch: suffix.last!, left: b, right: a))!)
         }
         if (numberStack.peek() == nil) {
-            promptBox(text: "格式错误")
+        promptBox(text: "格式错误")
         } else {
-            return numberStack.peek()!
+        return String(numberStack.peek()!)
         }
-        return 1
+        return "error"
     }
     
     public func postfixExpression(str:String)
@@ -240,16 +263,17 @@ class ViewController: UIViewController {
             suffix.append(operatorStack.peek()!)
             _=operatorStack.pop()
         }
-        caculateDisplay.text = "\(readSuffix(suffix: &suffix).roundTo(places: 10))"
-        decimainPoint = false//判断小数点
-        //judgmentResult = true//判断结果
-        parenthesisJudgement = false//括号判断
-        LeftBracketsCount = 0//左括号
-        RightBracketsCount = 0//右括号
-        numberCount = 0//数字计数
-        operatorCount = 0//运算符计数
-        judgmentResult = true
-        
+        if readSuffix(suffix: &suffix) != "error" {
+            caculateDisplay.text = "\(deleteZero(result: String(Double(readSuffix(suffix: &suffix))!.roundTo(places: 10))))"
+            decimainPoint = false//判断小数点
+            //judgmentResult = true//判断结果
+            parenthesisJudgement = false//括号判断
+            LeftBracketsCount = 0//左括号
+            RightBracketsCount = 0//右括号
+            numberCount = 0//数字计数
+            operatorCount = 0//运算符计数
+            judgmentResult = true
+        }
     }
     
     public func promptBox(text:String)
@@ -290,9 +314,9 @@ class ViewController: UIViewController {
             }
             if decimainPoint {
                 decimalCount = decimalCount + 1
-            } else {
-                numberCount = numberCount + 1
             }
+            numberCount = numberCount + 1
+            print(numberCount)
             judgmentResult = false
             parenthesisJudgement = true//括号判断
         }
@@ -369,7 +393,7 @@ class ViewController: UIViewController {
                 caculateDisplay.text = caculateDisplay.text!+"."
             }
             decimainPoint = true//小数点
-            numberCount = 0
+           
         }
     }
     
