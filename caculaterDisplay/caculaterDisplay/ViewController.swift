@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 public struct Stack <T>{
     //堆栈定义
     fileprivate var array: [T] = []//堆栈数组
@@ -16,11 +15,9 @@ public struct Stack <T>{
     mutating func push(_ element: T) {//入栈
         array.append(element)
     }
-    
     mutating func pop() -> T? {//出栈
         return array.popLast()
     }
-    
     func peek() -> T? {//栈顶
         return array.last
     }
@@ -43,13 +40,14 @@ extension Double{
 
 enum ExpressionError : Error {
     case DividedZero//除数为0错误
-    case OperandsError
 }
+
 func PrintError(number:Double) throws {
     if Int(number) == 0 {
         throw ExpressionError.DividedZero
     }
 }
+
 class ViewController: UIViewController {
     
     var LeftBracketsCount:Int = 0//左括号计数
@@ -142,7 +140,7 @@ class ViewController: UIViewController {
                 return String(left / right)
             } catch {
                 switch (error){
-                case ExpressionError.DividedZero:DividedZero = false
+                case ExpressionError.DividedZero:DividedZero = true
                 default:
                     promptBox(text: "未知错误")
                 }
@@ -162,6 +160,7 @@ class ViewController: UIViewController {
         var number = [Character]()
         var numberStr:String = ""
         var numberStack = Stack<Double>()//数字堆栈
+        
         for sff in suffix {
             if sff == " " {//当遇到空格时
                 numberStr = String (number)//将number数组转化为字符串
@@ -205,7 +204,7 @@ class ViewController: UIViewController {
             numberStack.push(Double(cauculate(ch: suffix.last!, left: b, right: a))!)
         }
         if (numberStack.peek() == nil) {
-        OperandsError = false
+        OperandsError = true
         } else {
         return String(numberStack.peek()!)
         }
@@ -259,9 +258,14 @@ class ViewController: UIViewController {
             }
         }
         while operatorStack.peek() != "#" {//将堆栈中剩余操作符输出
-            addSpace(blank: &suffix)
-            suffix.append(operatorStack.peek()!)
-            _=operatorStack.pop()
+            if operatorStack.peek() == "(" {
+                _=operatorStack.pop()//后缀表达式不含有括号
+            } else {
+                addSpace(blank: &suffix)
+                suffix.append(operatorStack.peek()!)
+                _=operatorStack.pop()
+            }
+            
         }
         if readSuffix(suffix: &suffix) != "error" {
             SubsidiaryDisplay.text = "\(deleteZero(result: String(Double(readSuffix(suffix: &suffix))!.roundTo(places: 10))))"
@@ -320,7 +324,6 @@ class ViewController: UIViewController {
             promptBox(text: "最多可添加20个运算符号")
         } else if caculateDisplay.text! == "" {
         } else {
-            
             last = caculateDisplay.text!.last!
             if JudgementNumber(number:last) || last == ")" || last == "%" {
                 //数字，右括号，百分号
@@ -328,6 +331,11 @@ class ViewController: UIViewController {
             }
             if operator1 == "-" && last == "(" {
                 caculateDisplay.text = caculateDisplay.text!+"-"
+            }
+            if String(last) != "operator1" {
+                //对最后一位不一样的运算符进行替换
+                (caculateDisplay.text!).remove(at: (caculateDisplay.text!).index(before: (caculateDisplay.text!).endIndex))//清除最后一位
+                caculateDisplay.text = caculateDisplay.text!+operator1
             }
             decimainPoint = false
             operatorCount = operatorCount + 1
@@ -369,6 +377,7 @@ class ViewController: UIViewController {
     @IBAction func Button9(_ sender: Any) {
         numberButton(number: "9")
     }
+    
     @IBAction func ButtonDot(_ sender: Any) {//小数点
         var last:Character = " "
         if caculateDisplay.text! == "" {//当屏幕为空时
@@ -385,7 +394,6 @@ class ViewController: UIViewController {
                 caculateDisplay.text = caculateDisplay.text!+"."
             }
             decimainPoint = true//小数点
-           
         }
     }
     
@@ -394,6 +402,7 @@ class ViewController: UIViewController {
         if caculateDisplay.text! == "" {//屏幕为空时
             caculateDisplay.text = caculateDisplay.text!+"("
             LeftBracketsCount = LeftBracketsCount + 1
+            SubsidiaryDisplay.text = ""
         } else {
             last = caculateDisplay.text!.last!
             if !parenthesisJudgement || LeftBracketsCount == RightBracketsCount {//按下数字h或左右括号数量相等
@@ -403,19 +412,23 @@ class ViewController: UIViewController {
                     decimainPoint = false
                     LeftBracketsCount = LeftBracketsCount + 1
                     operatorCount = operatorCount + 1
+                    SubsidiaryDisplay.text = ""
                 } else {
                     caculateDisplay.text = caculateDisplay.text!+"("
                     LeftBracketsCount = LeftBracketsCount + 1
+                    SubsidiaryDisplay.text = ""
                 }
             } else if parenthesisJudgement && RightBracketsCount < LeftBracketsCount {
                 //左h括号数量大于右括号
                 if last == "×" || last == "("{
                     caculateDisplay.text = caculateDisplay.text!+"("
                     LeftBracketsCount = LeftBracketsCount + 1
+                    SubsidiaryDisplay.text = ""
                 } else {
                     caculateDisplay.text = caculateDisplay.text!+")"
                     decimainPoint = false
                     RightBracketsCount = RightBracketsCount + 1
+                    postfixExpression(str:caculateDisplay.text!)
                 }
             }
         }
@@ -423,30 +436,31 @@ class ViewController: UIViewController {
             parenthesisJudgement = false
         }
     }
+    
     @IBAction func ButtonClear(_ sender: Any) {
         caculateDisplay.text = ""
         SubsidiaryDisplay.text = ""
         decimainPoint = false//判断小数点
         judgmentResult = false//判断结果
         parenthesisJudgement = false//括号判断
-        DividedZero = false
-        OperandsError = false
+        DividedZero = false//被除数为0
+        OperandsError = false//运算数为0
         LeftBracketsCount = 0//左括号
         RightBracketsCount = 0//右括号
         numberCount = 0
         operatorCount = 0
         decimalCount = 0
     }
-    @IBAction func buttonAdd(_ sender: Any) {//加法
+    @IBAction func ButtonAdd(_ sender: Any) {//加法
         operatorButton(operator1: "+")
     }
-    @IBAction func buttonSub(_ sender: Any) {//减法
+    @IBAction func ButtonSub(_ sender: Any) {//减法
         operatorButton(operator1: "-")
     }
-    @IBAction func buttonMul(_ sender: Any) {//乘法
+    @IBAction func ButtonMul(_ sender: Any) {//乘法
         operatorButton(operator1: "×")
     }
-    @IBAction func buttonDiv(_ sender: Any) {//除法
+    @IBAction func ButtonDiv(_ sender: Any) {//除法
         operatorButton(operator1: "÷")
     }
     @IBAction func ButtonPercentage(_ sender: Any) {//百分比运算
@@ -464,23 +478,26 @@ class ViewController: UIViewController {
         }
         postfixExpression(str:caculateDisplay.text!)
     }
-    @IBAction func buttonBrs(_ sender: Any) {//(-
+    @IBAction func ButtonBrs(_ sender: Any) {//(-
         var last:Character = " "
         if caculateDisplay.text! == "" {//屏幕为空
             caculateDisplay.text = "(-"
             LeftBracketsCount = LeftBracketsCount + 1
             operatorCount = operatorCount + 1
+            SubsidiaryDisplay.text = ""
         } else {
             last = caculateDisplay.text!.last!
             if JudgementNumber(number:last) || last == ")" || last == "%" {//数字后面,右括号，百分号
                 caculateDisplay.text = caculateDisplay.text!+"×(-"
                 LeftBracketsCount = LeftBracketsCount + 1
                 operatorCount = operatorCount + 2
+                SubsidiaryDisplay.text = ""
             } else if last == "." {
             } else {
                 caculateDisplay.text = caculateDisplay.text!+"(-"
                 LeftBracketsCount = LeftBracketsCount + 1
                 operatorCount = operatorCount + 1
+                SubsidiaryDisplay.text = ""
             }
         }
     }
@@ -513,14 +530,11 @@ class ViewController: UIViewController {
                 operatorCount = operatorCount - 1
             }
         }
+        DividedZero = false
+        OperandsError = false
         postfixExpression(str:caculateDisplay.text!)
     }
     @IBAction func buttonCaculator(_ sender: Any) {//等于
-     //   switch num{
-      //  case !num:
-        //w=414   h=666
-        
-        //let button1:UIButton = UIButton(type:.contactAdd)
         if caculateDisplay.text! == "" {//屏幕为空时
         } else if operatorCount == 0 {
         } else {
@@ -530,11 +544,14 @@ class ViewController: UIViewController {
                 RightBracketsCount = RightBracketsCount + 1
                 }
                 //postfixExpression(str:caculateDisplay.text!)
-            if DividedZero {
-                print(DividedZero)
-                promptBox(text: "不可除以0")
-            } else if OperandsError {
-                promptBox(text: "格式错误")
+            if SubsidiaryDisplay.text == "" {
+                if DividedZero {
+                    promptBox(text: "不可除以0")
+                    DividedZero = false
+                } else if OperandsError {
+                    promptBox(text: "格式错误")
+                    OperandsError = false
+                }
             } else {
                 caculateDisplay.text! = SubsidiaryDisplay.text!
                 SubsidiaryDisplay.text = ""
@@ -547,13 +564,9 @@ class ViewController: UIViewController {
                 operatorCount = 0//运算符计数
             }
         }
-        
-        if LeftBracketsCount == RightBracketsCount {//当左括号数量等于右括号时
-            
-        }
     }
     
-    @IBOutlet weak var Button: UIButton!
+    @IBOutlet weak var Button0: UIButton!
     @IBOutlet weak var Button1: UIButton!
     @IBOutlet weak var Button2: UIButton!
     @IBOutlet weak var Button3: UIButton!
@@ -582,8 +595,6 @@ class ViewController: UIViewController {
         ButtonCle.layer.borderColor = UIColor.init(displayP3Red: 0, green: 0, blue: 255, alpha: 0.1).cgColor
         ButtonCle.layer.borderWidth = 1
         
-        
-        
         ButtonPer.layer.borderColor = UIColor.init(displayP3Red: 0, green: 0, blue: 255, alpha: 0.1).cgColor
         ButtonPer.layer.borderWidth = 1
         
@@ -608,8 +619,8 @@ class ViewController: UIViewController {
         ButtonDot.layer.borderColor = UIColor.init(displayP3Red: 0, green: 0, blue: 255, alpha: 0.1).cgColor
         ButtonDot.layer.borderWidth = 1
         
-        Button.layer.borderColor = UIColor.init(displayP3Red: 0, green: 0, blue: 255, alpha: 0.1).cgColor
-        Button.layer.borderWidth = 1
+        Button0.layer.borderColor = UIColor.init(displayP3Red: 0, green: 0, blue: 255, alpha: 0.1).cgColor
+        Button0.layer.borderWidth = 1
         
         Button1.layer.borderColor = UIColor.init(displayP3Red: 0, green: 0, blue: 255, alpha: 0.1).cgColor
         Button1.layer.borderWidth = 1
@@ -637,7 +648,7 @@ class ViewController: UIViewController {
         
         Button9.layer.borderColor = UIColor.init(displayP3Red: 0, green: 0, blue: 255, alpha: 0.1).cgColor
         Button9.layer.borderWidth = 1
-        
+        //按钮边框
     }
 }
 
